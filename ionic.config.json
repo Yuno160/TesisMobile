@@ -1,0 +1,7 @@
+{
+  "name": "shog-ai-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
