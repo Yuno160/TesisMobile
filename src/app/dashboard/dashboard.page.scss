@@ -1,0 +1,100 @@
+.dashboard-content {
+  --background: #f4f5f8;
+}
+
+.welcome-card {
+  padding: 25px 20px;
+  background: white;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 800;
+  }
+
+  .role-badge {
+    display: inline-block;
+    background: #e1f0ff;
+    color: #3880ff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+  .date {
+    color: #95a5a6;
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+  }
+}
+
+.actions-grid {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  gap: 15px;
+}
+
+.action-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  height: 100%;
+
+  .icon-container {
+    background: #f4f5f8;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    
+    ion-icon {
+      font-size: 24px;
+      color: #7f8c8d;
+    }
+
+    &.secondary ion-icon {
+      color: #e67e22;
+    }
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 0 5px;
+    color: #34495e;
+  }
+
+  p {
+    font-size: 0.75rem;
+    color: #95a5a6;
+    margin: 0;
+  }
+}
+
+/* Estilo especial para el botón principal */
+.primary-action {
+  grid-column: span 2; /* Ocupa todo el ancho */
+  background: linear-gradient(135deg, #3880ff 0%, #3dc2ff 100%);
+  
+  h3, p {
+    color: white;
+  }
+  
+  .icon-container {
+    background: rgba(255,255,255,0.2);
+    ion-icon {
+      color: white;
+    }
+  }
+}

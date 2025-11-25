@@ -1,0 +1,112 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pacientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Evaluación CIF</ion-title>
+  </ion-toolbar>
+  
+  <ion-toolbar color="primary">
+    <ion-segment [(ngModel)]="segmentoActual" (ionChange)="segmentChanged($event)" scrollable>
+      <!-- USAMOS LAS LETRAS REALES DEL CÓDIGO -->
+      <ion-segment-button value="b">
+        <ion-label>Funciones</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="s">
+        <ion-label>Estructuras</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="d">
+        <ion-label>Actividades</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="e">
+        <ion-label>Entorno</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding bg-light">
+
+  <div class="patient-header" *ngIf="idPaciente">
+    <ion-icon name="person-circle-outline"></ion-icon>
+    <p>Paciente ID: <strong>{{ idPaciente }}</strong></p>
+  </div>
+
+  <ion-list class="evaluation-list">
+    <ion-list-header>
+      <ion-label class="section-title">
+        {{ getTituloSegmento() }}
+      </ion-label>
+    </ion-list-header>
+
+    <!-- ITERAMOS LOS ITEMS REALES DEL ÁRBOL -->
+    <div *ngFor="let item of itemsVisibles">
+      
+      <ion-card class="cif-card">
+        <ion-card-header>
+          <ion-card-subtitle>{{ item.codigo }}</ion-card-subtitle>
+          <ion-card-title>{{ item.descripcion }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          
+          <!-- Slider de Calificación -->
+          <div class="qualifier-container">
+            <ion-label position="stacked">
+              Nivel de deficiencia: 
+              <span class="badge-value">{{ calificaciones[item.codigo] || 0 }}</span>
+            </ion-label>
+            
+            <ion-range 
+              min="0" max="4" step="1" 
+              snaps="true" ticks="true"
+              [value]="calificaciones[item.codigo] || 0"
+              (ionChange)="registrarValor(item.codigo, $event)"
+              color="secondary">
+              <ion-icon slot="start" size="small" name="happy-outline"></ion-icon>
+              <ion-icon slot="end" size="small" name="sad-outline"></ion-icon>
+            </ion-range>
+            
+            <div class="range-labels">
+              <span>0 (Ninguno)</span>
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4 (Total)</span>
+            </div>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+
+    <div *ngIf="itemsVisibles.length === 0" class="empty-state">
+      <p>No hay códigos disponibles en esta sección o cargando...</p>
+    </div>
+
+    <!-- Campo de Observaciones -->
+    <ion-card class="obs-card">
+      <ion-card-content>
+        <ion-textarea 
+          label="Observaciones Generales" 
+          labelPlacement="floating"
+          fill="outline"
+          [(ngModel)]="observaciones"
+          rows="3">
+        </ion-textarea>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Espacio extra para el botón flotante -->
+    <div style="height: 80px;"></div>
+
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="confirmarGuardado()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

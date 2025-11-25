@@ -1,27 +1,67 @@
-#container {
+/* Fondo general */
+.login-background {
+  --background: #f4f5f8; /* Un gris muy suavecito */
+}
+
+/* Contenedor centrado */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  padding: 20px;
+}
+
+/* Títulos */
+.header-section {
   text-align: center;
+  margin-bottom: 30px;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  .main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2c3e50; /* Azul oscuro profesional */
+    margin: 0;
+  }
+
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin-top: 5px;
+  }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* Tarjeta del formulario */
+.login-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background: white;
+  padding: 10px 0;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+/* Inputs personalizados */
+.custom-input {
+  --padding-start: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
 }
 
-#container a {
-  text-decoration: none;
+.spacer {
+  height: 10px;
+}
+
+/* Botón */
+.login-btn {
+  --border-radius: 8px;
+  font-weight: bold;
+  height: 48px;
+  margin-top: 20px;
+  --background: #3880ff; /* Azul Ionic, puedes cambiarlo al de tu marca */
+}
+
+.footer-text {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: #bdc3c7;
 }

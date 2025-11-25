@@ -1,0 +1,43 @@
+<!-- Cambiamos translucent="true" a "false" para evitar problemas visuales -->
+<ion-header [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>SHOG.AI</ion-title>
+    
+    <!-- Aquí está el botón de Logout -->
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+  
+  <!-- Tarjeta de Bienvenida -->
+  <div class="welcome-card">
+    <h2>Hola, {{ nombreUsuario }}</h2>
+    <p class="role-badge">{{ rolUsuario }}</p>
+    <p class="date">Hoy es un buen día para ayudar.</p>
+  </div>
+
+  <!-- Menú de Acciones -->
+  <div class="actions-grid">
+    
+    <!-- Botón Principal: Evaluar -->
+    <ion-card class="action-card primary-action" (click)="irAEvaluacion()">
+      <ion-card-content>
+        <div class="icon-container">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+        <h3>Evaluar Paciente</h3>
+        <p>Iniciar nueva calificación CIF</p>
+      </ion-card-content>
+    </ion-card>
+
+ 
+
+  </div>
+
+</ion-content>

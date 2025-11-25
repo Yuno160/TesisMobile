@@ -1,20 +1,59 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding login-background">
+  
+  <div class="login-container">
+    <!-- Logo o Título del Proyecto -->
+    <div class="header-section">
+      <h1 class="main-title">SHOG.AI</h1>
+      <p class="subtitle">Sistema Experto de Clasificación CIF</p>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-card class="login-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Bienvenida</ion-card-title>
+        <ion-card-subtitle class="ion-text-center">Ingresa tus credenciales</ion-card-subtitle>
+      </ion-card-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          
+          <!-- Input Usuario -->
+          <ion-input
+            class="custom-input"
+            label="Usuario"
+            label-placement="floating"
+            fill="outline"
+            formControlName="usuario"
+            placeholder="Ingresa tu usuario">
+          </ion-input>
+          
+          <!-- Espacio -->
+          <div class="spacer"></div>
+
+          <!-- Input Password -->
+          <ion-input
+            class="custom-input"
+            label="Contraseña"
+            label-placement="floating"
+            fill="outline"
+            type="password"
+            formControlName="password"
+            placeholder="********">
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+
+          <!-- Botón de Acción -->
+          <div class="ion-margin-top">
+            <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-btn">
+              INICIAR SESIÓN
+              <ion-icon slot="end" name="log-in-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+    
+    <p class="footer-text">Tesis Ingeniería de Sistemas © 2025</p>
   </div>
+
 </ion-content>

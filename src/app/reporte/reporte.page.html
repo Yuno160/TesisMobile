@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pacientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reporte CIF</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bg-light ion-padding">
+
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <p>Cargando información...</p>
+  </div>
+
+  <div *ngIf="!loading && paciente">
+    
+    <!-- TARJETA DEL PACIENTE -->
+    <ion-card class="info-card">
+      <ion-card-header>
+        <div class="header-row">
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-card-title>{{ paciente.nombre }}</ion-card-title>
+        </div>
+        <ion-card-subtitle>CI: {{ paciente.carnet_identidad }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <strong>Edad:</strong> {{ paciente.edad }} años
+            </ion-col>
+            <ion-col size="6">
+              <strong>Género:</strong> {{ paciente.genero }}
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="paciente.antecedentes_medicos">
+            <ion-col size="12">
+              <strong>Antecedentes:</strong><br>
+              {{ paciente.antecedentes_medicos }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- TARJETA DE RESULTADOS -->
+    <ion-card class="results-card" *ngIf="evaluacion">
+      <ion-card-header>
+        <div class="header-row">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <ion-card-title>Resultados de Evaluación</ion-card-title>
+        </div>
+        <ion-card-subtitle>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Fecha: {{ evaluacion.fecha_creacion | date:'dd/MM/yyyy' }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        
+        <!-- Observaciones -->
+        <div class="observaciones-box">
+          <h3>Observaciones:</h3>
+          <p>{{ evaluacion.observaciones || 'Sin observaciones registradas.' }}</p>
+        </div>
+
+        <!-- Lista de Códigos -->
+        <h3 class="list-title">Códigos CIF Registrados</h3>
+        
+        <ion-list lines="none">
+          <ion-item *ngFor="let item of evaluacion.codigos" class="code-item">
+            <ion-label>
+              <h2>{{ item.codigo }}</h2> <!-- Asumo que 'codigo' trae 'b280' o 'b280.2' -->
+              <p>{{ item.descripcion || 'Descripción CIF' }}</p>
+            </ion-label>
+            
+            <!-- Badge con el valor (si viene separado o lo extraemos) -->
+            <!-- Si tu backend manda 'codigo': 'b280.2', visualmente ya se ve el .2 -->
+            <!-- Pero si tienes un campo 'valor', úsalo aquí -->
+            <ion-badge slot="end" color="primary">
+              {{ item.codigo }}
+            </ion-badge>
+          </ion-item>
+        </ion-list>
+
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="!evaluacion" class="ion-padding ion-text-center">
+      <ion-note color="danger">No se encontraron detalles de la evaluación.</ion-note>
+    </div>
+
+  </div>
+
+</ion-content>

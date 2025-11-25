@@ -1,0 +1,68 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asistente Experto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding wizard-content">
+
+  <!-- Barra de Progreso -->
+  <div class="progress-container">
+    <p>Pregunta {{ indicePreguntaActual + 1 }} de {{ listaPreguntas.length }}</p>
+    <ion-progress-bar [value]="progreso" color="secondary"></ion-progress-bar>
+  </div>
+
+  <div *ngIf="!loading && listaPreguntas.length > 0" class="card-container">
+    
+    <!-- Tarjeta de Pregunta -->
+    <ion-card class="question-card">
+      <ion-card-header>
+        <ion-card-subtitle>Código: {{ listaPreguntas[indicePreguntaActual].codigo_pregunta }}</ion-card-subtitle>
+        <ion-card-title class="question-text">
+          {{ listaPreguntas[indicePreguntaActual].texto_pregunta }}
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Botones de Respuesta -->
+    <!-- Asumiendo que tus respuestas en BD son '0', '1', '2', etc o textos como 'ligero' -->
+    <!-- Ajusta los valores en (click) según lo que espera tu regla.js -->
+    
+    <div class="answers-grid">
+      <ion-button expand="block" class="ans-btn green" (click)="responder('0')">
+        NO (Ninguna)
+        <span class="sub-text">0-4%</span>
+      </ion-button>
+
+      <ion-button expand="block" class="ans-btn yellow" (click)="responder('1')">
+        LIGERO
+        <span class="sub-text">5-24%</span>
+      </ion-button>
+
+      <ion-button expand="block" class="ans-btn orange" (click)="responder('2')">
+        MODERADO
+        <span class="sub-text">25-49%</span>
+      </ion-button>
+
+      <ion-button expand="block" class="ans-btn red" (click)="responder('3')">
+        GRAVE
+        <span class="sub-text">50-95%</span>
+      </ion-button>
+
+      <ion-button expand="block" class="ans-btn dark-red" (click)="responder('4')">
+        COMPLETO
+        <span class="sub-text">96-100%</span>
+      </ion-button>
+    </div>
+
+  </div>
+
+  <div *ngIf="!loading && listaPreguntas.length === 0" class="empty-state">
+    <p>No hay preguntas configuradas para esta categoría.</p>
+    <ion-button (click)="finalizarWizard()">Ir a Evaluación Manual</ion-button>
+  </div>
+
+</ion-content>

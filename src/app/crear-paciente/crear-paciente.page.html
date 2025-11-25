@@ -1,0 +1,110 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pacientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ esEdicion ? 'Editar Paciente' : 'Nuevo Paciente' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <form [formGroup]="pacienteForm" (ngSubmit)="guardar()">
+    
+    <ion-list lines="none">
+      
+      <!-- Nombre Completo -->
+      <ion-item class="form-item">
+        <ion-input 
+          label="Nombre Completo" 
+          labelPlacement="floating" 
+          fill="outline"
+          formControlName="nombre"
+          placeholder="Ej: Juan Pérez">
+        </ion-input>
+      </ion-item>
+      <div class="error-msg" *ngIf="pacienteForm.get('nombre')?.touched && pacienteForm.get('nombre')?.hasError('required')">
+        El nombre es obligatorio.
+      </div>
+
+      <!-- Carnet y Edad (En una fila) -->
+      <div class="row-inputs">
+        <ion-item class="form-item half-width">
+          <ion-input 
+            label="CI / DNI" 
+            labelPlacement="floating" 
+            fill="outline"
+            formControlName="carnet_identidad">
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="form-item half-width">
+          <ion-input 
+            label="Edad" 
+            labelPlacement="floating" 
+            fill="outline"
+            type="number"
+            formControlName="edad">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Género -->
+      <ion-item class="form-item">
+        <ion-select 
+          label="Género" 
+          labelPlacement="floating" 
+          fill="outline"
+          formControlName="genero"
+          interface="popover">
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+          <ion-select-option value="Otro">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Teléfono -->
+      <ion-item class="form-item">
+        <ion-input 
+          label="Teléfono" 
+          labelPlacement="floating" 
+          fill="outline"
+          type="tel"
+          formControlName="telefono">
+        </ion-input>
+      </ion-item>
+
+      <!-- Dirección -->
+      <ion-item class="form-item">
+        <ion-input 
+          label="Dirección" 
+          labelPlacement="floating" 
+          fill="outline"
+          formControlName="direccion">
+        </ion-input>
+      </ion-item>
+
+      <!-- Antecedentes -->
+      <ion-item class="form-item">
+        <ion-textarea 
+          label="Antecedentes Médicos" 
+          labelPlacement="floating" 
+          fill="outline"
+          rows="3"
+          formControlName="antecedentes_medicos"
+          placeholder="Alergias, cirugías previas...">
+        </ion-textarea>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="ion-padding-top">
+      <ion-button expand="block" type="submit" [disabled]="pacienteForm.invalid" size="large">
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        {{ esEdicion ? 'Actualizar Datos' : 'Registrar Paciente' }}
+      </ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

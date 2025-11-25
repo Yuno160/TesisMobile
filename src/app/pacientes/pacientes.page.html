@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <!-- Botón atrás para ir al Dashboard -->
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title>Pacientes</ion-title>
+
+    <!-- NUEVO: Botón de Logout a la derecha -->
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-searchbar 
+      placeholder="Buscar por nombre o CI..." 
+      (ionInput)="filtrarPacientes($event)"
+      color="light">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-bottom">
+  
+  <ion-refresher slot="fixed" (ionRefresh)="cargarPacientes($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list lines="full" *ngIf="!loading">
+    
+    <ion-item-sliding *ngFor="let p of pacientesFiltrados" [id]="'sliding-' + p.id_paciente">
+      
+      <ion-item-options side="start" *ngIf="!p.ya_calificado">
+        <ion-item-option color="tertiary" (click)="iniciarAsistente(p)">
+          <ion-icon slot="top" name="color-wand-outline"></ion-icon>
+          Asistente
+        </ion-item-option>
+
+      </ion-item-options>
+
+      <ion-item button (click)="seleccionarPaciente(p)" detail="true">
+        <ion-avatar slot="start" class="avatar-initials">
+          {{ p.nombre.charAt(0) }}
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ p.nombre }}</h2>
+          <p>CI: {{ p.carnet_identidad }} | Edad: {{ p.edad }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="p.ya_calificado ? 'success' : 'medium'">
+          {{ p.ya_calificado ? 'Calificado' : 'Pendiente' }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="secondary" (click)="editarPaciente(p)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminacion(p)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <div *ngIf="!loading && pacientesFiltrados.length === 0" class="empty-state">
+    <ion-icon name="people-outline"></ion-icon>
+    <p>No se encontraron pacientes.</p>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="crearNuevo()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

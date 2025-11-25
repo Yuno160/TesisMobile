@@ -1,0 +1,73 @@
+.bg-light {
+  --background: #f4f5f8;
+}
+
+.patient-header {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  
+  ion-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cif-card {
+  margin-inline: 0;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  ion-card-subtitle {
+    color: var(--ion-color-tertiary);
+    font-weight: 700;
+  }
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.qualifier-container {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+
+  ion-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #444;
+    margin-bottom: 5px;
+    display: block;
+  }
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: -5px;
+}
