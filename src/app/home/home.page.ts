@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, ToastController, LoadingController } from '@ionic/angular';
+import { IonicModule, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, 
+  IonCardContent, IonInput, IonButton, IonIcon, 
+  ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth'; // Asegúrate que la ruta sea correcta
+import { Config } from '../services/config'; 
 
+import { addIcons } from 'ionicons';
+import { logInOutline, settings } from 'ionicons/icons'; 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -14,14 +19,18 @@ import { AuthService } from '../services/auth'; // Asegúrate que la ruta sea co
 })
 export class HomePage implements OnInit {
   loginForm: FormGroup;
-  
+  currentIpDisplay: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private configService: Config,
     private router: Router,
     private toastController: ToastController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertController: AlertController // Inyectamos AlertController
   ) {
+
+    addIcons({ logInOutline, settings });
     // Si ya está logueado, mandarlo adentro
     if (this.authService.currentUserValue) {
       this.router.navigate(['/dashboard']); 
@@ -33,7 +42,42 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {this.actualizarIpDisplay();}
+
+  actualizarIpDisplay() {
+    // Solo mostramos la parte de la IP para que se vea bonito en el footer
+    const rawIp = this.configService.getRawIp();
+    this.currentIpDisplay = rawIp ? rawIp : 'Localhost (Default)';
+  }
+   // --- FUNCIÓN PARA CAMBIAR IP ---
+  async abrirConfiguracion() {
+    const alert = await this.alertController.create({
+      header: 'Configurar Servidor',
+      message: 'Ingresa la IP de tu computadora (ej: 192.168.1.15)',
+      inputs: [
+        {
+          name: 'ip',
+          type: 'text',
+          placeholder: 'Ej: 192.168.X.X',
+          value: this.configService.getRawIp() // Pre-llenar con la actual si existe
+        }
+      ],
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            if (data.ip) {
+              this.configService.saveIp(data.ip);
+              this.actualizarIpDisplay();
+              this.presentToast('IP actualizada correctamente. Reinicia si es necesario.', 'success');
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   async onSubmit() {
     if (this.loginForm.invalid) return;

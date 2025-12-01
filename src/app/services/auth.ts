@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Config } from '../services/config';
 
 // INTERFAZ: Define qué devuelve tu backend exactamente
 export interface LoginResponse {
@@ -23,16 +24,21 @@ export class AuthService {
   
   // ⚠️ IMPORTANTE SAKI: Cambia esta IP por la de tu computadora (ipconfig en windows)
   // Si usas emulador de Android Studio, puedes usar 10.0.2.2
-  private API_URL = 'http://localhost:3000/api/auth'; 
+
 
   private currentUserSubject: BehaviorSubject<LoginResponse | null>;
   public currentUser: Observable<LoginResponse | null>;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private configService: Config) {
     // Recuperamos sesión de localStorage
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<LoginResponse | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+   private get baseUrl(): string {
+    // Ajusta '/lo-que-sea' según el servicio (ej: '/auth', '/expertos')
+    return `${this.configService.getApiUrl()}/api/auth`; 
   }
 
   public get currentUserValue(): LoginResponse | null {
@@ -40,7 +46,7 @@ export class AuthService {
   }
 
   login(usuario: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/login`, { usuario, password })
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, { usuario, password })
       .pipe(map(response => {
         if (response && response.token) {
           // Guardamos en localStorage (Para tesis está bien, para prod usaríamos Capacitor Storage)
