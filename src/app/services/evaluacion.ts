@@ -8,13 +8,11 @@ import { Config } from '../services/config';
 })
 export class EvaluacionService {
 
-  // CAMBIA ESTO POR TU IP SI USAS CELULAR REAL (ej: http://192.168.1.XX:3000/api)
-  
+ 
 
   constructor(private http: HttpClient, 
     private configService: Config) { }
     private get baseUrl(): string {
-    // Ajusta '/lo-que-sea' según el servicio (ej: '/auth', '/expertos')
     return `${this.configService.getApiUrl()}/api`; 
   }
 

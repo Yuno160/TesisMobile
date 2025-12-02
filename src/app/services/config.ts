@@ -6,8 +6,7 @@ import { Injectable } from '@angular/core';
 export class Config {
 
   private STORAGE_KEY = 'api_ip_config';
-  // IP por defecto (tu localhost) por si el usuario no configura nada
-  private currentIp = 'http://localhost:3000/api'; 
+  private currentIp = 'http://localhost:3000'; 
 
   constructor() {
     this.loadConfig();
@@ -16,15 +15,13 @@ export class Config {
   loadConfig() {
     const storedIp = localStorage.getItem(this.STORAGE_KEY);
     if (storedIp) {
-      // Si el usuario guardó "192.168.1.50", lo convertimos a la URL completa
-      this.currentIp = `http://${storedIp}:3000/api`;
+      this.currentIp = `http://${storedIp}:3000`;
     }
   }
 
   saveIp(ip: string) {
-    // Guardamos solo la IP limpia (ej: 192.168.1.50)
     localStorage.setItem(this.STORAGE_KEY, ip);
-    this.currentIp = `http://${ip}:3000/api`;
+    this.currentIp = `http://${ip}:3000`;
   }
 
   getApiUrl(): string {

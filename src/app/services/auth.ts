@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Config } from '../services/config';
+import { timeout } from 'rxjs/operators';
 
 // INTERFAZ: Define qué devuelve tu backend exactamente
 export interface LoginResponse {
@@ -22,9 +23,6 @@ export interface LoginResponse {
 })
 export class AuthService {
   
-  // ⚠️ IMPORTANTE SAKI: Cambia esta IP por la de tu computadora (ipconfig en windows)
-  // Si usas emulador de Android Studio, puedes usar 10.0.2.2
-
 
   private currentUserSubject: BehaviorSubject<LoginResponse | null>;
   public currentUser: Observable<LoginResponse | null>;
@@ -47,7 +45,7 @@ export class AuthService {
 
   login(usuario: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, { usuario, password })
-      .pipe(map(response => {
+      .pipe(timeout(3000),map(response => {
         if (response && response.token) {
           // Guardamos en localStorage (Para tesis está bien, para prod usaríamos Capacitor Storage)
           localStorage.setItem('currentUser', JSON.stringify(response));

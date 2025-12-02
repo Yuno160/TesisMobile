@@ -7,8 +7,7 @@ import { Config } from '../services/config';
 })
 export class ExpertoService {
 
-  // Ajusta a tu IP si es necesario
-
+ 
   constructor(private http: HttpClient, private configService: Config) { }
 
   private get baseUrl(): string {

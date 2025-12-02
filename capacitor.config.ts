@@ -2,8 +2,13 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'shog-ai-mobile',
-  webDir: 'www'
+  appName: 'SEDCI',
+  webDir: 'www',
+  server: {
+    androidScheme: 'http',      
+    cleartext: true,            
+    allowNavigation: ['*']      
+  },
 };
 
 export default config;

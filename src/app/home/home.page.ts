@@ -80,10 +80,16 @@ export class HomePage implements OnInit {
   }
 
   async onSubmit() {
+  const ipGuardada = this.configService.getApiUrl();
+    // 1. CONSTRUIMOS LA URL VISUALMENTE
+    const urlFinal = `${ipGuardada}/login`;
+
+    // 2. ¡ALERTA CHISMOSA! 🚨
+    alert('INTENTANDO CONECTAR A: ' + urlFinal);
     if (this.loginForm.invalid) return;
 
-    // 1. Mostrar Loading visualmente atractivo
-    const loading = await this.loadingController.create({
+      // 1. Mostrar Loading visualmente atractivo
+      const loading = await this.loadingController.create({
       message: 'Ingresando a SHOG.AI...',
       spinner: 'crescent'
     });
@@ -112,6 +118,7 @@ export class HomePage implements OnInit {
         this.presentToast(msg, 'danger');
       }
     });
+    
   }
 
   // Helper para mostrar mensajes
